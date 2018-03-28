@@ -10,9 +10,9 @@ public class numberFromString {
         String mainString = sc.nextLine();
         mainString = mainString.replaceAll("[^0-9]+", " ");
         String [] numbString = mainString.split(" ");
-        int [] resul = new int [numbString.length];
+        int [] resul = new int [numbString.length-1];
         for (int i = 0; i < resul.length; i++) {
-            resul[i] = Integer.parseInt(numbString[i]);
+            resul[i] = Integer.parseInt(numbString[i+1]);
         }
         System.out.println(Arrays.toString(resul));
     }

@@ -14,6 +14,7 @@ public class arrayScaner {
         int leftAbs = 0;
         int rightAbs = 0;
         while (a % 2 == 1) {
+            System.out.println("Требую, введи четное число");
             a = sc.nextInt();
         }
         int [] randomArray = new int[a];
