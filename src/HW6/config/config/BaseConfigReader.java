@@ -22,7 +22,7 @@ abstract class BaseConfigReader {
                 return new TxtHandler();
             }
             default: {
-                return null;
+                return new BaseHanlder();
             }
         }
     }
