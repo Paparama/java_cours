@@ -6,22 +6,25 @@ import java.util.*;
 
 public class WarStatistic {
     public static void main(String[] args) throws IOException {
+        int counter = 0;
         File file = new File("./wp.txt");
-        Map<Integer, String> stat = new HashMap<>();
         List<String> words = TextCleaner.getWords(file);
-        Set<String> setWord = new HashSet<>(words);
-        for (String wd: setWord) {  // задача 1, получили статистику по каждому слову
-            stat.put(TextCleaner.getWordStat(wd, words), wd);
+        Map<String, Integer> wordsStat = TextCleaner.getAllWordsStat(words);
+        Map<String, Integer>  sortedWordStat = new LinkedHashMap<>();
+        wordsStat.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).forEach(k -> sortedWordStat.put(k.getKey(), k.getValue()));
+        for (Map.Entry set: sortedWordStat.entrySet()) {
+            System.out.println(set.getKey() + " " + set.getValue());
+            counter++;
+            if (counter == 9) {
+                break;
+            }
         }
-        //System.out.println( TextCleaner.getWordsBySymbols(3, words)); // реализован метод для собирания в группу слов по кол-ву символов
-        Map<Integer, String> tm = new TreeMap<>(stat);
-        int tmSize = tm.size();
-        List<String> result3 = new ArrayList<>(tm.values()).subList(tmSize-10, tmSize);
-        System.out.println(result3);  // ответ на 3 задачку
         List<String> result4 = new ArrayList<>(words);
-        List<String> articles = new ArrayList<>(Arrays.asList("a", "the", "on", "to", "into", "under")); // cписок дополняется
+        List<String> articles = new ArrayList<>(Arrays.asList("a", "the", "on", "to", "into", "under", "of", "for", "as", "by", "or")); // cписок дополняется
         result4.removeIf(articles::contains);
         System.out.println(result4);
+        System.out.println(TextCleaner.getWordsBySymbols(4, words));
+
 
     }
 }

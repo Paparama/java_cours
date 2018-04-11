@@ -30,4 +30,17 @@ public class TextCleaner {
         return result.size();
     }
 
+    protected static Map<String, Integer> getAllWordsStat(List<String> text){
+        Map<String, Integer> result = new HashMap<>();
+        for (String str: text) {
+            if (result.containsKey(str)) {
+                result.computeIfPresent(str, (k, v) -> v+1);
+            }
+            else {
+                result.put(str, 1);
+            }
+        }
+        return result;
+    }
+
 }
