@@ -24,7 +24,7 @@ public class WarStatistic {
         result4.removeIf(articles::contains);
         System.out.println(result4);
         System.out.println(TextCleaner.getWordsBySymbols(4, words));
-
+        System.out.println(TextCleaner.getAllCharsStat(TextCleaner.worsdToChar(words)));
 
     }
 }

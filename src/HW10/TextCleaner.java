@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TextCleaner {
     static List<String> result = new ArrayList<>();
@@ -15,8 +16,30 @@ public class TextCleaner {
             result.addAll(Arrays.asList(line.replaceAll("[-*\".,\'/()!?@#$%^&+=;:0-9\n\t]", "").split(" ")));
         }
         result.removeIf(s -> s.length() == 0);
+        result = result.stream().map(String::toLowerCase).collect(Collectors.toList());
         return result;
     }
+
+    protected static List<char[]> worsdToChar(List<String> text) {
+        return text.stream().map(String::toCharArray).collect(Collectors.toList());
+    }
+
+    protected static Map<Character, Double> getAllCharsStat(List<char[]> chars) {
+        List<Character> result = new ArrayList<>();
+        Map<Character, Double> charStat = new HashMap<>();
+        chars.forEach(s -> {
+            for (char i: s){
+                result.add(i);
+            }
+        });
+        Set<Character> charSet = new HashSet<>(result);
+        int allChars = result.size();
+        for (Character ch : charSet) {
+            charStat.put(ch, (((double) Collections.frequency(result, ch) * 100)/ (double) allChars));
+        }
+        return charStat;
+    }
+
 
     protected static Set<String> getWordsBySymbols(int i, List<String> text) {
         text.removeIf(s -> (s.length()!= i));
