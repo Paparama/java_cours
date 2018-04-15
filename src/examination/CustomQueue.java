@@ -1,16 +1,18 @@
 package examination;
 
-public class CustomQueue<T> extends CustomStack {
+public class CustomQueue<T> extends CustomLinkedList {
+    private int size = 0;
+    Node<T> first = null;
+    Node<T> last = null;
 
-    @Override
     public T pop(){
-        Object[] newlist = new Object[list.length - 1];
-        for (int i = 1; i < list.length; i++){
-            newlist[i] = list[i];
+        if (size == 0) {
+            throw new IndexOutOfBoundsException();
         }
-        T result = (T) list[0];
-        this.list = newlist;
+        T result = this.first.getItem();
+        this.first = this.first.next;
+        this.first.changePrev(null);
+        size--;
         return result;
     }
-
 }

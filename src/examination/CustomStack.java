@@ -1,25 +1,18 @@
 package examination;
 
-public class CustomStack<T> {
-    protected int size;
-    protected Object[] list;
-
-    public void add(T elem){
-        Object[] newlist = new Object[list.length + 1];
-        for (int i = 0; i < list.length; i++){
-            newlist[i] = list[i];
-        }
-        newlist[list.length] = elem;
-        this.list = newlist;
-    }
+public class CustomStack<T> extends CustomLinkedList{
+    private int size = 0;
+    Node<T> first = null;
+    Node<T> last = null;
 
     public T pop(){
-        Object[] newlist = new Object[list.length - 1];
-        for (int i = 0; i < list.length - 1; i++){
-            newlist[i] = list[i];
+        if (size == 0) {
+            throw new IndexOutOfBoundsException();
         }
-        T result = (T) list[list.length -1];
-        this.list = newlist;
+        T result = this.last.getItem();
+        this.last = this.last.prev;
+        this.last.changeNext(null);
+        size--;
         return result;
     }
 
