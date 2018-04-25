@@ -4,7 +4,7 @@ public class LuckyTicket {
         for (int i = 0; i <= 999; i++){
             for (int j = 1; j <= 999; j++) {
                 if (i%100/10+i/100+i%10 == j%100/10+j/100+j%10) {
-                    counter++;
+                    counter++; // counter
                 }
             }
         }
