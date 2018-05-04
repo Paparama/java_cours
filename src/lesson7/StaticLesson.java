@@ -1,6 +1,5 @@
 package lesson7;
 
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 
 public class StaticLesson {
     public static void main(String[] args) {
