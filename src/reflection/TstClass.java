@@ -1,9 +1,12 @@
 package reflection;
 
+import reflection.annotation.UserAnnotation;
+
 public class TstClass {
     private final int intData;
     private String strData;
 
+    @UserAnnotation(authorName = " koko ko ")  // применили аннотацию (см пакет аннотиации)
     public String tstField = "ololo";
 
     public TstClass(int intData, String strData) {

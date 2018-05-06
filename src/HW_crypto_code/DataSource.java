@@ -1,7 +1,9 @@
 package HW_crypto_code;
 
-public interface DataSource {
-    void writeData(String data);
+import java.io.UnsupportedEncodingException;
 
-    String readData();
+public interface DataSource {
+    void writeData(String data) throws UnsupportedEncodingException;
+
+    String readData() throws UnsupportedEncodingException;
 }

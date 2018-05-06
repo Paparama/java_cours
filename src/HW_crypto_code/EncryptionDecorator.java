@@ -1,5 +1,6 @@
 package HW_crypto_code;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 public class EncryptionDecorator extends DataSourceDecorator {
@@ -11,15 +12,15 @@ public class EncryptionDecorator extends DataSourceDecorator {
     }
 
     @Override
-    public void writeData(String data) {
-        super.writeData(data);
+    public void writeData(String data) throws UnsupportedEncodingException {
+        super.writeData(new String(encrypt(data, keyWord), "UTF-8"));
     }
 
 
 
     @Override
-    public String readData() {
-        return decode(super.readData());
+    public String readData() throws UnsupportedEncodingException {
+        return decode(super.readData().getBytes("UTF-8"), keyWord);
     }
 
     public byte[] encrypt(String text, String keyWord)
@@ -31,11 +32,14 @@ public class EncryptionDecorator extends DataSourceDecorator {
             result[i] = (byte) (arr[i] ^ keyarr[i % keyarr.length]); }
         return result; }
 
-    public String decode(String data) {
-        byte[] result = Base64.getDecoder().decode(data);
-        for (int i = 0; i < result.length; i++) {
-            result[i] -= (byte) 1;
+    public String decode(byte[] text, String keyWord) {
+        byte[] result = new byte[text.length];
+        byte[] keyarr = keyWord.getBytes();
+        for(int i = 0; i < text.length;i++) {
+            result[i] = (byte) (text[i] ^ keyarr[i% keyarr.length]);
         }
-        return new String(result);
-    }
+        return new String(result); }
 }
+
+
+
