@@ -7,6 +7,7 @@ import java.util.*;
 public class WarStatistic {
     public static void main(String[] args) throws IOException {
         int counter = 0;
+        int proc = Runtime.getRuntime().availableProcessors();
         File file = new File("./wp.txt");
         List<String> words = TextCleaner.getWords(file);
         Map<String, Integer> wordsStat = TextCleaner.getAllWordsStat(words);
