@@ -9,9 +9,8 @@ import java.util.concurrent.Executors;
 
 public class Bank {
     private Map<User, Account> users = new HashMap<>();
-    static List<Account> lockedAcc = new ArrayList<>();
 
-    public boolean transferMoney(Account src, Account dst, int amount) {
+    private boolean transferMoney(Account src, Account dst, int amount) {
                 if (src.getAmount() < amount) {
                     return false;
                 }
@@ -41,7 +40,7 @@ public class Bank {
     }
 
     private static class TransactionThread extends Thread {
-        private Account src ;
+        private Account src;
         private Account dst;
         private int amount;
         private Bank bank;
@@ -55,13 +54,25 @@ public class Bank {
 
         @Override
         public void run() {
-            synchronized ((Integer) this.src.getAccountId()) {
-                } synchronized ((Integer) this.dst.getAccountId()) {
+            int fromId = src.getAccountId();
+            int toId = dst.getAccountId();
+            if (fromId < toId) {
+                synchronized (src) {
+                    synchronized (dst) {
+
+                        System.out.println(bank.transferMoney(this.src, this.dst, this.amount) + Thread.currentThread().getName());
+
+                    }
+                }
+
+            } else synchronized (dst) {
+                synchronized (src) {
                     System.out.println(bank.transferMoney(this.src, this.dst, this.amount) + Thread.currentThread().getName());
-                    lockedAcc.remove(src);
+
                 }
             }
         }
+    }
 
         public static void main(String[] args) throws InterruptedException {
         Bank bank = new Bank();
@@ -74,7 +85,7 @@ public class Bank {
         bank.addUserAndAcc(user3, new Account(300, user3));
         bank.addUserAndAcc(user4, new Account(400, user4));
         List<Thread> workers = new ArrayList<>();
-            for (int i = 0; i <  100 ; i++) {
+            for (int i = 0; i <  1000 ; i++) {
                 Thread t = new TransactionThread(bank.getUserAcc(user1), bank.getUserAcc(user2), 1, bank);
                 Thread t2 = new TransactionThread(bank.getUserAcc(user3), bank.getUserAcc(user1), 1, bank);
                 Thread t3 = new TransactionThread(bank.getUserAcc(user2), bank.getUserAcc(user1), 1, bank);
