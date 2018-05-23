@@ -56,21 +56,13 @@ public class Bank {
         @Override
         public void run() {
             synchronized ((Integer) this.src.getAccountId()) {
-                Bank.lockedAcc.add(src);
-                while (lockedAcc.contains(dst)) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        lockedAcc.remove(src);
-                    }
                 } synchronized ((Integer) this.dst.getAccountId()) {
                     System.out.println(bank.transferMoney(this.src, this.dst, this.amount) + Thread.currentThread().getName());
                     lockedAcc.remove(src);
                 }
             }
         }
-    }
+
         public static void main(String[] args) throws InterruptedException {
         Bank bank = new Bank();
         User user1 = new User("kokoko1");
