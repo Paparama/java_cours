@@ -89,13 +89,16 @@ public class Bank {
                 Thread t = new TransactionThread(bank.getUserAcc(user1), bank.getUserAcc(user2), 1, bank);
                 Thread t2 = new TransactionThread(bank.getUserAcc(user3), bank.getUserAcc(user1), 1, bank);
                 Thread t3 = new TransactionThread(bank.getUserAcc(user2), bank.getUserAcc(user1), 1, bank);
+                Thread t4 = new TransactionThread(bank.getUserAcc(user1), bank.getUserAcc(user3), 1, bank);
+
                 workers.add(t);
                 workers.add(t2);
                 workers.add(t3);
+                workers.add(t4);
                 t.start();
                 t2.start();
                 t3.start();
-
+                t4.start();
             }
             for (Thread t: workers
                  ) {
